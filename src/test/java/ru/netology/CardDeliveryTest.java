@@ -21,7 +21,7 @@ public class CardDeliveryTest {
 
     @Test
     void shouldRegister() {
-        $(byCssSelector("fieldset div:nth-child(1) input")).setValue("Санкт-Петербург");
+        $("[data-test-id=city] input").setValue("Санкт-Петербург");
         String day = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[placeholder='Дата встречи']").setValue(day);
@@ -29,7 +29,7 @@ public class CardDeliveryTest {
         $(byName("phone")).setValue("+71234567431");
         $("[data-test-id=agreement]").click();
         $("[class='button__text']").click();
-        $(byClassName("notification__title")).shouldHave(exactText("Успешно!"), Duration.ofSeconds(15));
+        $("[data-test-id=notification]").shouldHave(exactText("Успешно! Встреча успешно забронирована на " + day), Duration.ofSeconds(15));
     }
 
     @Test
@@ -46,31 +46,31 @@ public class CardDeliveryTest {
 
     @Test
     void shouldRegisterWithoutName(){
-        $(byCssSelector("fieldset div:nth-child(1) input")).setValue("Санкт-Петербург");
+        $("[data-test-id=city] input").setValue("Санкт-Петербург");
         String day = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[placeholder='Дата встречи']").setValue(day);
         $(byName("phone")).setValue("+71234567431");
         $("[data-test-id=agreement]").click();
         $("[class='button__text']").click();
-        $(byCssSelector("form div:nth-child(3) span span.input__sub")).shouldHave(exactText("Поле обязательно для заполнения"));
+        $("[data-test-id='name'] .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
     }
 
     @Test
     void shouldRegisterWithoutPhone(){
-        $(byCssSelector("fieldset div:nth-child(1) input")).setValue("Санкт-Петербург");
+        $("[data-test-id=city] input").setValue("Санкт-Петербург");
         String day = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[placeholder='Дата встречи']").setValue(day);
         $(byName("name")).setValue("Иван Иванов");
         $("[data-test-id=agreement]").click();
         $("[class='button__text']").click();
-        $(byCssSelector("div:nth-child(4) span span.input__sub")).shouldHave(exactText("Поле обязательно для заполнения"));
+        $("[data-test-id='phone'] .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
     }
 
     @Test
     void shouldRegisterWithoutCheckBox(){
-        $(byCssSelector("fieldset div:nth-child(1) input")).setValue("Санкт-Петербург");
+        $("[data-test-id=city] input").setValue("Санкт-Петербург");
         String day = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[placeholder='Дата встречи']").setValue(day);
@@ -82,7 +82,7 @@ public class CardDeliveryTest {
 
     @Test
     void shouldRegisterWithInvalidCity() {
-        $(byCssSelector("fieldset div:nth-child(1) input")).setValue("Moscow");
+        $("[data-test-id=city] input").setValue("Moscow");
         String day = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[placeholder='Дата встречи']").setValue(day);
@@ -95,7 +95,7 @@ public class CardDeliveryTest {
 
     @Test
     void shouldRegisterWithInvalidName() {
-        $(byCssSelector("fieldset div:nth-child(1) input")).setValue("Санкт-Петербург");
+        $("[data-test-id=city] input").setValue("Санкт-Петербург");
         String day = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[placeholder='Дата встречи']").setValue(day);
@@ -103,12 +103,12 @@ public class CardDeliveryTest {
         $(byName("phone")).setValue("+71234567431");
         $("[data-test-id=agreement]").click();
         $("[class='button__text']").click();
-        $(byCssSelector("fieldset div:nth-child(3) span span.input__sub")).shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+        $("[data-test-id='name'] .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
 
     @Test
     void shouldRegisterWithInvalidNumber() {
-        $(byCssSelector("fieldset div:nth-child(1) input")).setValue("Санкт-Петербург");
+        $("[data-test-id=city] input").setValue("Санкт-Петербург");
         String day = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[placeholder='Дата встречи']").setValue(day);
@@ -116,7 +116,7 @@ public class CardDeliveryTest {
         $(byName("phone")).setValue("+712345");
         $("[data-test-id=agreement]").click();
         $("[class='button__text']").click();
-        $(byCssSelector("fieldset div:nth-child(4) span span.input__sub")).shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
+        $("[data-test-id='phone'] .input__sub").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
 
